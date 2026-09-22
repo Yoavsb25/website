@@ -44,7 +44,7 @@ jobs:
       id-token: write
     steps:
       - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ inputs.ref || github.sha }}
 
@@ -54,7 +54,7 @@ jobs:
           version: 9.15.0
 
       - name: Setup Node
-        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4.2.0
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version-file: .nvmrc
           cache: pnpm
@@ -73,7 +73,7 @@ jobs:
         uses: actions/configure-pages@983d7736a7b80960a378ac3742299f96bdf9c1fa # v5.0.0
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: out
 
@@ -92,7 +92,7 @@ jobs:
       actions: write
     steps:
       - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Setup pnpm
         uses: pnpm/action-setup@a7487c7e89a18be500035ba77b504471abd873dd # v4.1.0
@@ -100,7 +100,7 @@ jobs:
           version: 9.15.0
 
       - name: Setup Node
-        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4.2.0
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version-file: .nvmrc
           cache: pnpm
