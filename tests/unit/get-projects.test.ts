@@ -20,8 +20,9 @@ describe("get-projects", () => {
 
   it("looks up by slug", () => {
     const slug = getProjectSlugs()[0];
-    expect(slug).toBeTruthy();
-    expect(getProjectBySlug(slug!).slug).toBe(slug);
+    expect(slug).toBeDefined();
+    if (!slug) return;
+    expect(getProjectBySlug(slug)?.slug).toBe(slug);
     expect(getProjectBySlug("missing-slug")).toBeUndefined();
   });
 });
