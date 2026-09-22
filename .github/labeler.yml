@@ -1,0 +1,10 @@
+"features/**/*":
+  - feature
+"src/components/**/*":
+  - ui
+"content/**/*":
+  - content
+".github/**/*":
+  - ci
+"docs/**/*":
+  - docs

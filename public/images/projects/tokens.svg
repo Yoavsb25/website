@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750" role="img" aria-label="Design token bridge cover">
+  <rect width="1200" height="750" fill="#f5f2eb"/>
+  <circle cx="280" cy="320" r="90" fill="#1a1a1a"/>
+  <circle cx="480" cy="320" r="90" fill="#3d5a4c"/>
+  <circle cx="680" cy="320" r="90" fill="#8b7355"/>
+  <text x="80" y="520" fill="#1a1a1a" font-family="Georgia, serif" font-size="56">Tokens</text>
+</svg>

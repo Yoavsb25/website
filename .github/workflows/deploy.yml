@@ -1,0 +1,139 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Git ref to deploy (leave empty for current)
+        required: false
+        type: string
+      is_rollback:
+        description: Mark as rollback (skips further rollback loops)
+        required: false
+        type: boolean
+        default: false
+  schedule:
+    # Daily rebuild to refresh GitHub data
+    - cron: "0 6 * * *"
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    uses: ./.github/workflows/_verify.yml
+    secrets: inherit
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ inputs.ref || github.sha }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@a7487c7e89a18be500035ba77b504471abd873dd # v4.1.0
+        with:
+          version: 9.15.0
+
+      - name: Setup Node
+        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4.2.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        env:
+          SITE_URL: https://yoavsb25.github.io
+          NEXT_PUBLIC_GITHUB_USERNAME: Yoavsb25
+          GH_PROFILE_TOKEN: ${{ secrets.GH_PROFILE_TOKEN }}
+        run: pnpm build
+
+      - name: Configure Pages
+        uses: actions/configure-pages@983d7736a7b80960a378ac3742299f96bdf9c1fa # v5.0.0
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
+        with:
+          path: out
+
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0ebdacb6f57a3b4 # v4.0.5
+
+  smoke:
+    name: Production smoke
+    needs: deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      issues: write
+      actions: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@a7487c7e89a18be500035ba77b504471abd873dd # v4.1.0
+        with:
+          version: 9.15.0
+
+      - name: Setup Node
+        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4.2.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browser
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Smoke tests
+        id: smoke
+        env:
+          PLAYWRIGHT_BASE_URL: https://yoavsb25.github.io
+        run: pnpm exec playwright test --grep @smoke
+        continue-on-error: true
+
+      - name: Rollback on smoke failure
+        if: steps.smoke.outcome == 'failure' && inputs.is_rollback != true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          LAST_GOOD=$(gh run list --workflow=deploy.yml --status=success --limit 5 --json databaseId,headSha,conclusion \
+            --jq '[.[] | select(.conclusion=="success")][1].headSha // empty')
+          if [ -z "$LAST_GOOD" ]; then
+            echo "No previous successful deploy found"
+            exit 1
+          fi
+          echo "Rolling back to $LAST_GOOD"
+          gh workflow run deploy.yml -f ref="$LAST_GOOD" -f is_rollback=true
+          gh issue create --title "Production smoke failed — rollback triggered" \
+            --body "Smoke tests failed on \`${{ github.sha }}\`. Rollback to \`$LAST_GOOD\` was dispatched. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+      - name: Fail job if smoke failed
+        if: steps.smoke.outcome == 'failure'
+        run: exit 1

@@ -1,0 +1,62 @@
+name: Scheduled guards
+
+on:
+  schedule:
+    - cron: "0 * * * *" # hourly smoke
+    - cron: "0 9 * * 1" # weekly audits
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  security-events: write
+
+jobs:
+  uptime:
+    name: Hourly uptime
+    if: github.event.schedule == '0 * * * *' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check live site
+        id: check
+        continue-on-error: true
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://yoavsb25.github.io/)
+          echo "status=$STATUS" >> "$GITHUB_OUTPUT"
+          test "$STATUS" = "200"
+
+      - name: Open issue on failure
+        if: steps.check.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create --repo "${{ github.repository }}" \
+            --title "Uptime check failed for yoavsb25.github.io" \
+            --body "Hourly smoke returned status \`${{ steps.check.outputs.status }}\`. Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+  weekly:
+    name: Weekly audits
+    if: github.event.schedule == '0 9 * * 1' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Link check live site
+        uses: lycheeverse/lychee-action@82202e54e8aa71d072803f9630edfe59eb2584ae # v2.3.0
+        with:
+          args: --verbose --no-progress https://yoavsb25.github.io/
+          fail: false
+
+      - name: OpenSSF Scorecard
+        uses: ossf/scorecard-action@62b2cac7ed8198b15735ed49ab1e5cf35480ba46 # v2.4.0
+        with:
+          results_file: results.sarif
+          results_format: sarif
+          publish_results: true
+
+      - name: Upload Scorecard SARIF
+        uses: github/codeql-action/upload-sarif@9e8d0789e6a1354f201bcd777825b1ee065cd226 # v3.28.9
+        with:
+          sarif_file: results.sarif

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750" role="img" aria-label="Shipping guardrails cover">
+  <rect width="1200" height="750" fill="#121417"/>
+  <rect x="80" y="180" width="320" height="40" rx="6" fill="#3d5a4c"/>
+  <rect x="80" y="250" width="480" height="40" rx="6" fill="#2a2f36"/>
+  <rect x="80" y="320" width="400" height="40" rx="6" fill="#2a2f36"/>
+  <rect x="80" y="390" width="520" height="40" rx="6" fill="#3d5a4c"/>
+  <text x="80" y="520" fill="#f5f2eb" font-family="Georgia, serif" font-size="56">Guardrails</text>
+</svg>

@@ -1,0 +1,21 @@
+---
+title: Design Token Bridge
+slug: design-token-bridge
+summary: A token pipeline that keeps Figma and production CSS in sync for a multi-theme product UI.
+year: 2024
+featured: true
+tags:
+  - Design Systems
+  - Tailwind
+  - Accessibility
+coverImage: /images/projects/tokens.svg
+problem: Design and engineering drifted — colors and spacing disagreed between Figma and CSS.
+plan: Define semantic tokens once, generate CSS variables, enforce usage via lint and Storybook-style primitives.
+design: Neutral base plus one accent; light and dark from the same semantic map; no raw hex in components.
+build: Tailwind v4 `@theme`, shared UI primitives, visual regression for both themes.
+outcome: New screens reused tokens instead of inventing colors; theme bugs dropped sharply.
+---
+
+## Overview
+
+A small system with a large effect on consistency and delivery speed.

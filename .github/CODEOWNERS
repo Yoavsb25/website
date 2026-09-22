@@ -1,0 +1,8 @@
+# CODEOWNERS
+
+* @Yoavsb25
+.github/ @Yoavsb25
+docs/adr/ @Yoavsb25
+*.config.* @Yoavsb25
+package.json @Yoavsb25
+pnpm-lock.yaml @Yoavsb25

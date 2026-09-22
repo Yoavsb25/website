@@ -1,0 +1,42 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "sborovsky",
+    "yoav",
+    "yoavsb",
+    "yoavsborovsky",
+    "nextjs",
+    "tailwindcss",
+    "vitest",
+    "playwright",
+    "knip",
+    "gitleaks",
+    "lychee",
+    "zizmor",
+    "actionlint",
+    "codeql",
+    "dependabot",
+    "newsreader",
+    "noopener",
+    "noreferrer",
+    "mdx",
+    "frontmatter",
+    "stargazer",
+    "hsts",
+    "igaltal",
+    "turbopack",
+    "unstub",
+    "clsx",
+    "lighthouserc"
+  ],
+  "ignorePaths": [
+    "node_modules/**",
+    ".next/**",
+    "out/**",
+    "coverage/**",
+    "playwright-report/**",
+    "test-results/**",
+    "pnpm-lock.yaml"
+  ]
+}

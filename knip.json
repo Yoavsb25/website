@@ -1,0 +1,17 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "entry": ["src/app/**/*.{ts,tsx}", "scripts/**/*.ts", "tests/**/*.{ts,tsx}"],
+  "project": ["src/**/*.{ts,tsx}", "content/**/*.{ts,tsx}", "scripts/**/*.ts"],
+  "ignore": ["src/components/ui/index.ts"],
+  "ignoreDependencies": [
+    "eslint-config-next",
+    "postcss",
+    "@tailwindcss/postcss",
+    "tailwindcss",
+    "serve"
+  ],
+  "ignoreExportsUsedInFile": true,
+  "rules": {
+    "catalog": "off"
+  }
+}
