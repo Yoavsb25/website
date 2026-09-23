@@ -5,7 +5,9 @@ test.describe("home", () => {
   test("renders hero and primary sections @smoke", async ({ page }) => {
     await page.goto("/");
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-    await expect(page.getByRole("heading", { name: /case studies/i })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: /built from scratch\. shipped to production/i }),
+    ).toBeVisible();
     await expect(page.getByRole("link", { name: /email me/i })).toBeVisible();
   });
 

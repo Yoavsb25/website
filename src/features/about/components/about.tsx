@@ -7,7 +7,7 @@ export function About() {
     <Section id="about" ariaLabelledBy="about-heading">
       <p className="text-subtle font-mono text-xs tracking-[0.2em] uppercase">About</p>
       <Heading id="about-heading" className="mt-3 max-w-2xl">
-        Designer of systems. Builder of products.
+        Planner. Builder. Shipper.
       </Heading>
       <p className="text-muted mt-6 max-w-2xl text-lg leading-relaxed">{profile.about}</p>
 

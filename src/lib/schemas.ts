@@ -52,8 +52,9 @@ export const projectFrontmatterSchema = z.object({
   coverImage: z.string().optional(),
   problem: z.string().min(1),
   plan: z.string().min(1),
-  design: z.string().min(1),
   build: z.string().min(1),
+  deploy: z.string().min(1),
+  ai: z.string().optional(),
   outcome: z.string().min(1),
 });
 
@@ -90,3 +91,33 @@ export const githubProfileSchema = z.object({
 });
 
 export type GithubRepo = z.infer<typeof githubRepoSchema>;
+
+export const processStepSchema = z.object({
+  title: z.string().min(1),
+  body: z.string().min(1),
+  artifact: z.string().min(1),
+});
+
+export const processSchema = z.object({
+  eyebrow: z.string().min(1),
+  heading: z.string().min(1),
+  intro: z.string().min(1),
+  steps: z.array(processStepSchema).min(1),
+});
+
+export type ProcessContent = z.infer<typeof processSchema>;
+
+export const aiPillarSchema = z.object({
+  title: z.string().min(1),
+  body: z.string().min(1),
+});
+
+export const aiContentSchema = z.object({
+  eyebrow: z.string().min(1),
+  heading: z.string().min(1),
+  intro: z.string().min(1),
+  pillars: z.array(aiPillarSchema).min(1),
+  workflow: z.array(z.string().min(1)).min(1),
+});
+
+export type AiContent = z.infer<typeof aiContentSchema>;

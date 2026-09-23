@@ -34,8 +34,8 @@ describe("content schemas", () => {
         year: 2026,
         problem: "p",
         plan: "p",
-        design: "d",
         build: "b",
+        deploy: "d",
         outcome: "o",
       }),
     ).toThrow();

@@ -5,7 +5,9 @@ import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { profile } from "@content/profile";
 
 const links = [
+  { href: "/#process", label: "Process" },
   { href: "/#work", label: "Work" },
+  { href: "/#ai", label: "AI" },
   { href: "/#about", label: "About" },
   { href: "/#experience", label: "Experience" },
   { href: "/#github", label: "GitHub" },
