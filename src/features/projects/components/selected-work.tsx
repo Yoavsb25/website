@@ -11,8 +11,9 @@ export function SelectedWork({ projects }: { projects: Project[] }) {
     <Section id="work" ariaLabelledBy="work-heading">
       <p className="text-subtle font-mono text-xs tracking-[0.2em] uppercase">Selected work</p>
       <Heading id="work-heading" className="mt-3 max-w-2xl">
-        Case studies from plan to production.
+        Built from scratch. Shipped to production.
       </Heading>
+      <p className="text-muted mt-3 max-w-xl">Case studies from blank page to live systems.</p>
       <ul className="divide-border border-border mt-12 divide-y border-y">
         {projects.map((project) => (
           <li key={project.slug}>
@@ -102,8 +103,9 @@ export function ProjectCaseStudy({ project }: { project: Project }) {
   const stages = [
     { label: "Problem", body: project.problem },
     { label: "Plan", body: project.plan },
-    { label: "Design", body: project.design },
     { label: "Build", body: project.build },
+    { label: "Deploy", body: project.deploy },
+    ...(project.ai ? [{ label: "AI in the loop", body: project.ai }] : []),
     { label: "Outcome", body: project.outcome },
   ];
 

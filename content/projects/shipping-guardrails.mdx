@@ -11,8 +11,9 @@ tags:
 coverImage: /images/projects/guardrails.svg
 problem: Teams shipped fast but regressions slipped through because checks were optional and inconsistent.
 plan: Define a reusable verify workflow, required status checks, and deploy smoke with automatic rollback.
-design: Clear PR feedback — semantic titles, size labels, sticky check summaries, actionable failure issues.
 build: Composite GitHub Actions, coverage thresholds, axe in e2e, Lighthouse CI, Dependabot with patch auto-merge.
+deploy: Required status checks on main, deploy smoke after merge, automatic rollback when smoke fails.
+ai: Guardrails that make AI-generated PRs safe to merge — agents draft, gates decide.
 outcome: Merge confidence improved; rollbacks became rare and automatic when smoke failed.
 ---
 

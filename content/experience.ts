@@ -22,10 +22,10 @@ const raw: ExperienceItem[] = [
     start: "2020",
     end: "2023",
     summary:
-      "Designed and built product MVPs across web and API layers, pairing tightly with design on interaction and accessibility.",
+      "Took product MVPs from blank page to production across web and API layers, owning planning, build, and deploy end to end.",
     highlights: [
-      "Shipped three products from zero to production",
-      "Established design-token system shared between Figma and code",
+      "Took three products from zero to production",
+      "Built CI/CD and smoke-test pipelines that made weekly releases routine",
     ],
   },
 ];
