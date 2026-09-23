@@ -48,9 +48,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         `}</style>
       </head>
       <body>
+        <a
+          href="#main-content"
+          className="bg-accent text-accent-fg sr-only z-50 rounded-sm px-4 py-2 focus:not-sr-only focus:fixed focus:top-2 focus:left-2"
+        >
+          Skip to content
+        </a>
         <ThemeProvider>
           <SiteHeader />
-          <main>{children}</main>
+          <main id="main-content">{children}</main>
           <SiteFooter />
         </ThemeProvider>
       </body>

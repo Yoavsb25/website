@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { Container } from "@/components/ui/container";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { MobileNav } from "@/components/mobile-nav";
 import { profile } from "@content/profile";
 
 const links = [
@@ -32,7 +33,10 @@ export function SiteHeader() {
             </Link>
           ))}
         </nav>
-        <ThemeToggle />
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <MobileNav links={links} />
+        </div>
       </Container>
     </header>
   );
