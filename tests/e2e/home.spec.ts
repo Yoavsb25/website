@@ -18,15 +18,6 @@ test.describe("home", () => {
     await expect(page.locator("html")).toHaveAttribute("class", /dark|light/);
   });
 
-  test("has no serious axe violations", async ({ page }) => {
-    await page.goto("/");
-    const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa"]).analyze();
-    const serious = results.violations.filter((v) =>
-      ["serious", "critical"].includes(v.impact ?? ""),
-    );
-    expect(serious).toEqual([]);
-  });
-
   test("csp meta is present and precedes the first script tag", async ({ page }) => {
     // Checked against the raw response, not the hydrated DOM: React's head
     // management removes this meta tag on hydration, but a meta CSP is
@@ -58,5 +49,40 @@ test.describe("404", () => {
     // Static hosts may still return 200 for custom 404.html fallbacks
     expect(response?.status()).toBeLessThan(500);
     await expect(page.getByRole("heading", { name: /not on the map/i })).toBeVisible();
+  });
+});
+
+async function expectNoSeriousAxeViolations(page: import("@playwright/test").Page) {
+  // Web font loading can shift paint timing enough for axe's color-contrast
+  // check to sample mid-render pixels; wait for fonts to settle first.
+  await page.evaluate(() => document.fonts.ready);
+  const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa"]).analyze();
+  const serious = results.violations.filter((v) =>
+    ["serious", "critical"].includes(v.impact ?? ""),
+  );
+  expect(serious).toEqual([]);
+}
+
+test.describe("accessibility", () => {
+  for (const colorScheme of ["light", "dark"] as const) {
+    test(`home has no serious axe violations (${colorScheme})`, async ({ page }) => {
+      await page.emulateMedia({ colorScheme });
+      await page.goto("/");
+      await expectNoSeriousAxeViolations(page);
+    });
+  }
+
+  test("project case study has no serious axe violations", async ({ page }) => {
+    await page.goto("/");
+    await page
+      .getByRole("link", { name: /open case study/i })
+      .first()
+      .click();
+    await expectNoSeriousAxeViolations(page);
+  });
+
+  test("404 page has no serious axe violations", async ({ page }) => {
+    await page.goto("/does-not-exist/");
+    await expectNoSeriousAxeViolations(page);
   });
 });
