@@ -28,7 +28,17 @@
     "turbopack",
     "unstub",
     "clsx",
-    "lighthouserc"
+    "lighthouserc",
+    "Evals",
+    "evals",
+    "GHSA",
+    "exploitability",
+    "viewports",
+    "artipacked",
+    "libvips",
+    "wcag",
+    "opengraph",
+    "smol"
   ],
   "ignorePaths": [
     "node_modules/**",
@@ -37,6 +47,7 @@
     "coverage/**",
     "playwright-report/**",
     "test-results/**",
-    "pnpm-lock.yaml"
+    "pnpm-lock.yaml",
+    "docs/**"
   ]
 }

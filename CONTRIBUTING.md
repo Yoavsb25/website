@@ -40,7 +40,7 @@ pnpm test:e2e
 
 - Features under `src/features/*` must not import each other
 - Prefer adding content in `content/` over hardcoding in components
-- Architectural decisions get an ADR in `docs/adr/`
+- Non-trivial architecture changes should be called out and explained in the PR description
 
 ## Security
 
