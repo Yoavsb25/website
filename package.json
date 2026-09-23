@@ -77,5 +77,14 @@
     "*.{md,mdx,json,yml,yaml,css}": [
       "prettier --write"
     ]
+  },
+  "pnpm": {
+    "overrides": {
+      "postcss": ">=8.5.18",
+      "handlebars": ">=4.7.9",
+      "glob@>=10.2.0 <10.5.0": ">=10.5.0",
+      "markdownlint-cli>js-yaml": ">=4.3.2",
+      "smol-toml": ">=1.7.1"
+    }
   }
 }
