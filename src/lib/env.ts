@@ -3,7 +3,17 @@ import { z } from "zod";
 
 export const env = createEnv({
   server: {
-    SITE_URL: z.string().url().default("http://localhost:3000"),
+    SITE_URL: z
+      .string()
+      .url()
+      .default("http://localhost:3000")
+      .refine(
+        // Gated on CI (not NODE_ENV): `next build` always sets NODE_ENV to
+        // "production", including for local verification builds, so this
+        // only enforces a real SITE_URL for the automated CI/deploy path.
+        (url) => process.env.CI !== "true" || !/^https?:\/\/localhost(:\d+)?(\/|$)/i.test(url),
+        "SITE_URL must not be localhost in CI — set SITE_URL to the real deployment URL",
+      ),
     GH_PROFILE_TOKEN: z.string().optional(),
   },
   client: {

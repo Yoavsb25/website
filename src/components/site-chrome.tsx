@@ -49,7 +49,7 @@ export function SiteFooter() {
           <a
             href={profile.social.github}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="text-muted hover:text-fg"
           >
             GitHub
@@ -57,7 +57,7 @@ export function SiteFooter() {
           <a
             href={profile.social.linkedin}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="text-muted hover:text-fg"
           >
             LinkedIn

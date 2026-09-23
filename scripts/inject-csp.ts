@@ -53,8 +53,9 @@ function inject(html: string): string {
     return html;
   }
 
-  if (html.includes("</head>")) {
-    return html.replace("</head>", `${meta}\n${referrer}\n</head>`);
+  const headOpenRe = /<head(?:\s[^>]*)?>/i;
+  if (headOpenRe.test(html)) {
+    return html.replace(headOpenRe, (headTag) => `${headTag}\n${meta}\n${referrer}`);
   }
 
   return `${meta}\n${referrer}\n${html}`;
