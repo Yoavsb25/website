@@ -129,7 +129,7 @@ export function ProjectCaseStudy({ project }: { project: Project }) {
             <a
               href={project.liveUrl}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="text-accent hover:underline"
             >
               Live site ↗
@@ -139,7 +139,7 @@ export function ProjectCaseStudy({ project }: { project: Project }) {
             <a
               href={project.repoUrl}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="text-accent hover:underline"
             >
               Repository ↗

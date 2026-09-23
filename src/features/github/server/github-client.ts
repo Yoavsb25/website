@@ -46,10 +46,10 @@ export async function getGithubProfile(): Promise<GithubViewModel> {
     return { ...githubFallback, source: "fallback" };
   }
 
-  try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 8000);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
 
+  try {
     const response = await fetch("https://api.github.com/graphql", {
       method: "POST",
       headers: {
@@ -63,15 +63,15 @@ export async function getGithubProfile(): Promise<GithubViewModel> {
       cache: "force-cache",
     });
 
-    clearTimeout(timeout);
-
     if (!response.ok) {
+      console.warn(`GitHub profile fetch failed: HTTP ${response.status}`);
       return { ...githubFallback, source: "fallback" };
     }
 
     const json: unknown = await response.json();
     const user = (json as { data?: { user?: unknown } }).data?.user;
     if (!user) {
+      console.warn("GitHub profile fetch failed: response missing data.user");
       return { ...githubFallback, source: "fallback" };
     }
 
@@ -84,7 +84,10 @@ export async function getGithubProfile(): Promise<GithubViewModel> {
       pinned: parsed.pinnedItems.nodes,
       source: "live",
     };
-  } catch {
+  } catch (error) {
+    console.warn("GitHub profile fetch failed:", error);
     return { ...githubFallback, source: "fallback" };
+  } finally {
+    clearTimeout(timeout);
   }
 }

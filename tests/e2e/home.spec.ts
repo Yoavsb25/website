@@ -27,10 +27,17 @@ test.describe("home", () => {
     expect(serious).toEqual([]);
   });
 
-  test("csp meta is present", async ({ page }) => {
-    await page.goto("/");
-    const csp = page.locator('meta[http-equiv="Content-Security-Policy"]');
-    await expect(csp).toHaveCount(1);
+  test("csp meta is present and precedes the first script tag", async ({ page }) => {
+    // Checked against the raw response, not the hydrated DOM: React's head
+    // management removes this meta tag on hydration, but a meta CSP is
+    // applied by the browser as soon as it's parsed and stays in effect for
+    // the page, so the raw HTML order is what actually matters here.
+    const response = await page.goto("/");
+    const html = await response!.text();
+    const cspIndex = html.indexOf('http-equiv="Content-Security-Policy"');
+    const firstScriptIndex = html.indexOf("<script");
+    expect(cspIndex).toBeGreaterThan(-1);
+    expect(cspIndex).toBeLessThan(firstScriptIndex);
   });
 });
 

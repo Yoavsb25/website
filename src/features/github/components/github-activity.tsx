@@ -33,7 +33,7 @@ export function GithubActivity({ data }: { data: GithubViewModel }) {
             <a
               href={repo.url}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="border-border bg-surface/40 hover:bg-surface block border p-5 no-underline transition-colors"
             >
               <div className="flex items-center justify-between gap-3">
@@ -52,7 +52,7 @@ export function GithubActivity({ data }: { data: GithubViewModel }) {
       <a
         href={data.url}
         target="_blank"
-        rel="noreferrer"
+        rel="noopener noreferrer"
         className="text-accent mt-8 inline-block font-mono text-sm hover:underline"
       >
         View profile ↗

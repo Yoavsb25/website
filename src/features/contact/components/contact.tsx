@@ -51,7 +51,7 @@ export function Contact() {
         <a
           href={profile.social.github}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           className="text-accent hover:underline"
         >
           GitHub ↗
@@ -59,7 +59,7 @@ export function Contact() {
         <a
           href={profile.social.linkedin}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           className="text-accent hover:underline"
         >
           LinkedIn ↗
