@@ -25,13 +25,13 @@ export function createMetadata(overrides: Metadata = {}): Metadata {
       siteName: profile.name,
       title: titleText,
       description: descriptionText,
-      images: [{ url: "/og.svg", width: 1200, height: 630, alt: profile.name }],
+      images: [{ url: "/og.png", width: 1200, height: 630, alt: profile.name }],
     },
     twitter: {
       card: "summary_large_image",
       title: titleText,
       description: descriptionText,
-      images: ["/og.svg"],
+      images: ["/og.png"],
     },
     robots: {
       index: true,
