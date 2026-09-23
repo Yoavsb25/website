@@ -1,4 +1,4 @@
-"features/**/*":
+"src/features/**/*":
   - feature
 "src/components/**/*":
   - ui

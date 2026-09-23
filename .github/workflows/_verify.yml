@@ -2,6 +2,14 @@ name: Verify
 
 on:
   workflow_call:
+    inputs:
+      ref:
+        description: Git ref to verify (defaults to the triggering commit)
+        required: false
+        type: string
+    secrets:
+      GH_PROFILE_TOKEN:
+        required: false
     outputs:
       artifact-name:
         description: Name of the uploaded static site artifact
@@ -17,6 +25,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ inputs.ref || github.sha }}
+          persist-credentials: false
 
       - name: Setup pnpm
         uses: pnpm/action-setup@a7487c7e89a18be500035ba77b504471abd873dd # v4.1.0
@@ -62,6 +73,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ inputs.ref || github.sha }}
+          persist-credentials: false
 
       - name: Setup pnpm
         uses: pnpm/action-setup@a7487c7e89a18be500035ba77b504471abd873dd # v4.1.0
