@@ -26,8 +26,6 @@ Defense in depth:
 5. **Deploy** — Pages Actions only; smoke tests; rollback to last good SHA
 6. **Scheduled** — hourly uptime, daily rebuild, weekly Scorecard
 
-See [docs/specs/2026-09-22-portfolio-design.md](docs/specs/2026-09-22-portfolio-design.md) and [docs/adr](docs/adr).
-
 ## Scripts
 
 | Command          | Description                     |
@@ -52,8 +50,6 @@ src/lib           → env, seo, schemas, utils
 content/          → MDX case studies + typed data
 ```
 
-Details: [docs/architecture.md](docs/architecture.md)
-
 ## Setup
 
 ```bash
@@ -75,8 +71,6 @@ Optional: set `GH_PROFILE_TOKEN` (read-only fine-grained GitHub token) for live 
 
 ## Docs
 
-- [Design spec](docs/specs/2026-09-22-portfolio-design.md)
-- [ADRs](docs/adr)
 - [Contributing](CONTRIBUTING.md)
 - [Security](SECURITY.md)
 

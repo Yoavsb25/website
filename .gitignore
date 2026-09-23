@@ -32,3 +32,9 @@ pnpm-debug.log*
 *.tsbuildinfo
 playwright-report/
 test-results/
+
+# Internal engineering docs & AI tooling (local-only, not published)
+/docs/
+/AGENTS.md
+/CLAUDE.md
+/.cursor/
